@@ -10,6 +10,10 @@
 
 En la arquitectura contemporánea de agentes de Inteligencia Artificial, la persistencia del aprendizaje post-ejecución sigue siendo un desafío crítico. A pesar de los avances en técnicas de auto-corrección (*Self-Refine*) y bucles de reflexión (*Reflexion*), la mayoría de los agentes operan bajo una condición de "Amnesia Estructural": la capacidad de corregir un error dentro de una sesión no garantiza la evitación de ese mismo error en interacciones futuras. Este artículo presenta el concepto de **Memoria PHVA Vectorizada** (Vectorized PHVA Memory), un marco de trabajo que integra el ciclo clásico de mejora continua (Planear-Hacer-Verificar-Actuar) con almacenamiento vectorial asíncrono. Esta arquitectura transforma la fase de "Actuar" de una mera corrección temporal en una reconfiguración estructural de la base de conocimientos del agente, logrando una tasa de reincidencia de errores cercana a cero.
 
+<div align="center">
+  <sub><b>Control de Versiones:</b> v1.1.0 · <b>Última Actualización:</b> 2026-02-27 · <b>Cambios:</b> Integración de Ecosistema PHVA Vectorizado</sub>
+</div>
+
 ## 1. Introducción: Del Ciclo de Deming a la Arquitectura Agéntica
 
 El ciclo PHVA (Plan-Do-Check-Act) ha sido el estándar de oro en la gestión de calidad industrial durante décadas. Su traslación al campo de los Grandes Modelos de Lenguaje (LLMs) y agentes autónomos es natural pero, hasta ahora, ha carecido de una dimensión de persistencia evolutiva.
@@ -17,6 +21,12 @@ El ciclo PHVA (Plan-Do-Check-Act) ha sido el estándar de oro en la gestión de 
 En un flujo estándar, el agente divide la tarea (**Plan**), ejecuta acciones (**Hacer**) e inspecciona resultados (**Verificar**), implementando ciclos iterativos propuestos por autores de técnicas como *Self-Refine* (Madaan et al.) o el marco de trabajo *Reflexion* (Shinn et al.). Sin embargo, la verdadera innovación y el **valor agregado de Antigravity** surgen en el cierre del ciclo: la fase de **Actuar** realizada al finalizar el proyecto.
 
 En lugar de limitarse a corregir el código para cumplir con el prompt inmediato, el sistema ejecuta una **Retrospectiva Post-Ejecución**. En esta etapa, el agente realiza una lectura profunda de los logs de la sesión, identifica los errores persistentes que requirieron múltiples intentos de solución y los destila como registros permanentes indexados vectorialmente en una base de datos de troubleshooting para consultas futuras.
+
+### 2.0 Implementación del Ecosistema: PHVA Vectorizado
+Este repositorio ejecuta una capa de memoria local persistente utilizando **ChromaDB** y **Sentence-Transformers**. Los agentes interactúan con esta base de conocimientos mediante búsqueda semántica proactiva.
+
+*   **Motor RAG Local**: Orquestación de archivos `rag_manager.py` y `train_agents_rag.py`.
+*   **Auto-Aparizaje**: Rutina automatizada (`autotrain_phva.py`) que sincroniza el Vector Store ante nuevos registros en `troubleshooting.md`.
 
 ## 2. Definición del Concepto: La Memoria PHVA Vectorizada
 
