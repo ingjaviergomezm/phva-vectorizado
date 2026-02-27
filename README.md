@@ -25,10 +25,25 @@ En lugar de limitarse a corregir el código para cumplir con el prompt inmediato
 ### 2.0 Implementación del Ecosistema: PHVA Vectorizado
 Este repositorio ejecuta una capa de memoria local persistente utilizando **ChromaDB** y **Sentence-Transformers**. Los agentes interactúan con esta base de conocimientos mediante búsqueda semántica proactiva.
 
-*   **Motor RAG Local**: Orquestación de archivos `rag_manager.py` y `train_agents_rag.py`.
-*   **Auto-Aparizaje**: Rutina automatizada (`autotrain_phva.py`) que sincroniza el Vector Store ante nuevos registros en `troubleshooting.md`.
+**Arquitectura Central del Repositorio:**
+*   **Corazón Lógico (`SKILL.md`)**: Define las reglas de oro y el protocolo de activación del ciclo PHVA para todos los agentes de Antigravity.
+*   **Memoria Persistente (`troubleshooting.md`)**: El registro histórico de fallos y aprendizajes.
+*   **Motor RAG Local**: Orquestación de memoria a través de `rag_manager.py` y el indexador semántico `train_agents_rag.py`.
+*   **Auto-Aprendizaje**: Rutina automatizada (`autotrain_phva.py`) que sincroniza el Vector Store ante nuevos registros.
 
-## 2. Definición del Concepto: La Memoria PHVA Vectorizada
+### 2.1 El Ecosistema de Ruteo Inteligente (El Cerebro y el Músculo)
+Para garantizar la **Confiabilidad T1** del sistema, la base de conocimientos se integra directamente con un orquestador dinámico compuesto por dos piezas fundamentales:
+
+1.  **El Cerebro (`ROUTER_PHVA.md`)**: Actúa como la matriz de decisiones cognitivas. Documenta heurísticas de fallo (ej. *"Si el prompt > 2500 tokens, el modelo local fallará"*), establece políticas de mitigación (escalar a GPT-4o) y define los comandos de auto-entrenamiento. Es el libro de reglas.
+2.  **El Músculo (`antigravity_praison_delegate.py`)**: Es el supervisor operativo construido sobre *PraisonAI*. Aplica en tiempo real las reglas del Router:
+    *   Ejecuta el **Gatekeeping de Seguridad** (Circuit breaker de presupuesto y validación de Sandboxing).
+    *   Realiza el **Ruteo Dinámico** conectando la petición con el Agente Especializado idóneo (`gemini-flash` para documentos, `sonar-pro` para investigación).
+    *   Inyecta la **Memoria RAG** (`ChromaDB`) en el contexto del agente obrero antes de la ejecución.
+
+*(Nota: Dashboards, telemetría y configuraciones de seguridad residen localmente para proteger la privacidad del entorno)*
+
+## 3. Definición del Concepto: La Memoria PHVA Vectorizada
+
 
 La **Memoria PHVA Vectorizada** no es solo un registro histórico; es un sistema de **Persistencia Continua Inter-Sesional**. Se define por la capacidad del sistema para:
 
