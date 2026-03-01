@@ -2,111 +2,77 @@
 
 **Autor:** Javier Gómez M.  
 **Concepto:** Blueprint Meridian Infrastructure  
-**Fecha:** 26 de Febrero, 2026
+**Fecha:** 1 de Marzo, 2026
 
 ---
 
 ## 📄 Abstract
 
-En la arquitectura contemporánea de agentes de Inteligencia Artificial, la persistencia del aprendizaje post-ejecución sigue siendo un desafío crítico. A pesar de los avances en técnicas de auto-corrección (*Self-Refine*) y bucles de reflexión (*Reflexion*), la mayoría de los agentes operan bajo una condición de "Amnesia Estructural": la capacidad de corregir un error dentro de una sesión no garantiza la evitación de ese mismo error en interacciones futuras. Este artículo presenta el concepto de **Memoria PHVA Vectorizada** (Vectorized PHVA Memory), un marco de trabajo que integra el ciclo clásico de mejora continua (Planear-Hacer-Verificar-Actuar) con almacenamiento vectorial asíncrono. Esta arquitectura transforma la fase de "Actuar" de una mera corrección temporal en una reconfiguración estructural de la base de conocimientos del agente, logrando una tasa de reincidencia de errores cercana a cero.
+En la arquitectura contemporánea de agentes de Inteligencia Artificial, la persistencia del aprendizaje post-ejecución sigue siendo un desafío crítico. A pesar de los avances en técnicas de auto-corrección (*Self-Refine*) y bucles de reflexión (*Reflexion*), la mayoría de los agentes operan bajo una condición de "Amnesia Estructural". Este artículo presenta el concepto de **Memoria PHVA Vectorizada v2.0**, un marco de trabajo que no solo integra el ciclo clásico de mejora continua (Planear-Hacer-Verificar-Actuar) con almacenamiento vectorial, sino que ahora incorpora **Inteligencia Correctiva (CRAG)** y **Capacidad de Auto-Evolución (Self-Evolution)**. Esta arquitectura transforma la fase de "Actuar" de una mera corrección manual en una reconfiguración estructural autónoma, logrando un sistema que no solo recuerda sus errores, sino que muta sus propias directivas para prevenirlos.
 
-<div align="center">
-  <sub><b>Control de Versiones:</b> v1.1.0 · <b>Última Actualización:</b> 2026-02-27 · <b>Cambios:</b> Integración de Ecosistema PHVA Vectorizado</sub>
+<div align="center\">
+  <sub><b>Control de Versiones:</b> v2.0.0 · <b>Última Actualización:</b> 2026-03-01 · <b>Cambios:</b> Integración de CRAG Protocol y Motor de Self-Evolution</sub>
 </div>
 
 ## 1. Introducción: Del Ciclo de Deming a la Arquitectura Agéntica
 
-El ciclo PHVA (Plan-Do-Check-Act) ha sido el estándar de oro en la gestión de calidad industrial durante décadas. Su traslación al campo de los Grandes Modelos de Lenguaje (LLMs) y agentes autónomos es natural pero, hasta ahora, ha carecido de una dimensión de persistencia evolutiva.
+El ciclo PHVA (Plan-Do-Check-Act) ha sido el estándar de oro en la gestión de calidad industrial. En Antigravity, hemos evolucionado este ciclo para que la fase de **Actuar** sea el motor de una infraestructura que aprende.
 
-En un flujo estándar, el agente divide la tarea (**Plan**), ejecuta acciones (**Hacer**) e inspecciona resultados (**Verificar**), implementando ciclos iterativos propuestos por autores de técnicas como *Self-Refine* (Madaan et al.) o el marco de trabajo *Reflexion* (Shinn et al.). Sin embargo, la verdadera innovación y el **valor agregado de Antigravity** surgen en el cierre del ciclo: la fase de **Actuar** realizada al finalizar el proyecto.
+### 2.0 Arquitectura v2.0: El Salto Evolutivo
 
-En lugar de limitarse a corregir el código para cumplir con el prompt inmediato, el sistema ejecuta una **Retrospectiva Post-Ejecución**. En esta etapa, el agente realiza una lectura profunda de los logs de la sesión, identifica los errores persistentes que requirieron múltiples intentos de solución y los destila como registros permanentes indexados vectorialmente en una base de datos de troubleshooting para consultas futuras.
+La versión 2.0 de la Memoria PHVA Vectorizada introduce dos componentes críticos que resuelven los cuellos de botella de la recuperación de información y la aplicación de lecciones aprendidas:
 
-### 2.0 Implementación del Ecosistema: PHVA Vectorizado
-Este repositorio ejecuta una capa de memoria local persistente utilizando **ChromaDB** y **Sentence-Transformers**. Los agentes interactúan con esta base de conocimientos mediante búsqueda semántica proactiva.
+#### 2.1 Corrective RAG (CRAG) — El Filtro de Relevancia
+Uno de los riesgos del RAG tradicional es la inyección de "ruido" (información recuperada que no aplica al contexto actual). El **Protocolo CRAG** integrado en el ciclo PHVA añade una capa de evaluación semántica:
+- **Scoring de Relevancia:** Cada lección recuperada de la memoria vectorial es puntuada (0-10).
+- **Trigger Correctivo:** Si el puntaje es bajo (< 5), el sistema rechaza la memoria local y activa automáticamente una búsqueda refinada o investigación profunda (*Deep Research*).
+- **Beneficio:** Elimina alucinaciones basadas en lecciones obsoletas o de stacks tecnológicos diferentes.
 
-**Arquitectura Central del Repositorio:**
-*   **Corazón Lógico (`SKILL.md`)**: Define las reglas de oro y el protocolo de activación del ciclo PHVA para todos los agentes de Antigravity.
-*   **Memoria Persistente (`troubleshooting.md`)**: El registro histórico de fallos y aprendizajes.
-*   **Motor RAG Local**: Orquestación de memoria a través de `rag_manager.py` y el indexador semántico `train_agents_rag.py`.
-*   **Auto-Aprendizaje**: Rutina automatizada (`autotrain_phva.py`) que sincroniza el Vector Store ante nuevos registros.
+#### 2.2 Motor de Self-Evolution (Auto-Mejora Estructural)
+Mientras que la v1.1 se centraba en *almacenar* el error, la v2.0 se centra en *erradicarlo* del manual de procedimientos.
+- **Mutación de Skills:** El sistema analiza patrones de error recurrentes en la base de datos de troubleshooting y propone cambios directos en las instrucciones base (`SKILL.md`).
+- **Inmunidad Estructural:** El conocimiento pasa de ser una "pista" recuperada a ser una "Regla de Oro" mandatoria en el ADN del agente.
+- **Beneficio:** Automatiza la mejora continua, reduciendo la intervención humana en la optimización de la infraestructura.
 
-### 2.1 El Ecosistema de Ruteo Inteligente (El Cerebro y el Músculo)
-Para garantizar la **Confiabilidad T1** del sistema, la base de conocimientos se integra directamente con un orquestador dinámico compuesto por dos piezas fundamentales:
-
-1.  **El Cerebro (`ROUTER_PHVA.md`)**: Actúa como la matriz de decisiones cognitivas. Documenta heurísticas de fallo (ej. *"Si el prompt > 2500 tokens, el modelo local fallará"*), establece políticas de mitigación (escalar a GPT-4o) y define los comandos de auto-entrenamiento. Es el libro de reglas.
-2.  **El Músculo (`antigravity_praison_delegate.py`)**: Es el supervisor operativo construido sobre *PraisonAI*. Aplica en tiempo real las reglas del Router:
-    *   Ejecuta el **Gatekeeping de Seguridad** (Circuit breaker de presupuesto y validación de Sandboxing).
-    *   Realiza el **Ruteo Dinámico** conectando la petición con el Agente Especializado idóneo (`gemini-flash` para documentos, `sonar-pro` para investigación).
-    *   Inyecta la **Memoria RAG** (`ChromaDB`) en el contexto del agente obrero antes de la ejecución.
-
-*(Nota: Dashboards, telemetría y configuraciones de seguridad residen localmente para proteger la privacidad del entorno)*
+---
 
 ## 3. Definición del Concepto: La Memoria PHVA Vectorizada
 
+La **Memoria PHVA Vectorizada** es un sistema de **Persistencia Continua Inter-Sesional**. En su versión 2.0, se define por la capacidad del sistema para:
 
-La **Memoria PHVA Vectorizada** no es solo un registro histórico; es un sistema de **Persistencia Continua Inter-Sesional**. Se define por la capacidad del sistema para:
+1.  **Atomizar el Error:** Descomponer una falla técnica en su síntoma, causa raíz y solución.
+2.  **Validar la Memoria (CRAG):** Asegurar que la experiencia previa es 100% relevante al problema actual.
+3.  **Auto-Programar la Mejora (Self-Evolution):** Traducir los fallos históricos en nuevas directivas de seguridad y calidad.
 
-1.  **Atomizar el Error:** Descomponer una falla técnica en su síntoma, causa raíz y solución óptima.
-2.  **Vectorizar la Lección:** Convertir la experiencia de resolución en un embedding semántico que reside en una base de datos de "Troubleshooting".
-3.  **Consulta Proactiva:** Realizar una búsqueda de similitud semántica *antes* de la fase de "Planear" en tareas futuras, inyectando contexto preventivo directamente en el prompt del sistema.
-
-### 2.1 El Bucle de Retroalimentación y Almacenamiento
-
-El siguiente diagrama ilustra el proceso de adquisición de conocimiento mediante el cual Antigravity "aprende" de sus propios ciclos de ejecución:
+### 3.1 El Nuevo Bucle de Retroalimentación v2.0
 
 ```mermaid
 graph TD
-    A["Feedback del Usuario / Detección de Error"] --> B{"¿Fallo Iterativo?"}
-    B -- "Sí (Trigger: 3 Intentos)" --> C["Análisis de Causa Raíz (RCA)"]
-    C --> D["Destilación de Lección (Knowledge Item)"]
-    D --> E["Generación de Entrada en /troubleshooting/"]
-    E --> F["Enriquecimiento de Metadata (ID, Severidad, Solución)"]
-    F --> G["Almacenamiento Vectorial Semántico"]
-    G --> H["Indexación para Consulta Proactiva"]
-    H --> I["Planificación Futura con 'Prevención de Reincidencia'"]
+    A["Feedback / Detección de Error"] --> B{"¿Fallo Iterativo?"}
+    B -- "Sí" --> C["Analisis de Logs & RCA"]
+    C --> D["Destilación de Lección"]
+    D --> E["Registro en Troubleshooting"]
+    E --> F["MOTOR DE SELF-EVOLUTION"]
+    F --> G["Mutación de Directivas (SKILL.md)"]
+    G --> H["Infraestructura Optimizada (vNext)"]
+    
+    I["Nueva Tarea"] --> J["Búsqueda en Memoria"]
+    J --> K{"EVALUACIÓN CRAG"}
+    K -- "Relevancia < 5" --> L["Refinamiento / Fallback Web"]
+    K -- "Relevancia > 8" --> M["Inyección de Contexto Preventivo"]
+    L --> M
+    M --> N["Ejecución con Éxito en Intento 1"]
 ```
 
-## 3. Dinámica del Trigger de Troubleshooting: La Regla de los Tres Fallos
+## 4. Importancia y Beneficios de la v2.0
 
-Para optimizar la relación entre **calidad de respuesta** y **costo computacional**, el sistema implementa un disparador heurístico basado en la persistencia del error. No todo error merece ser vectorizado, pero todo error recurrente *debe* ser erradicado.
+*   **Precisión de Memoria (CRAG):** Evita que el agente intente aplicar soluciones de React a un proyecto de Vue solo porque ambos mencionan "componentes".
+*   **Autonomía Evolutiva:** El sistema detecta sus propias debilidades y sugiere cómo arreglarlas en su propio "código de conducta" (Skills).
+*   **Eficiencia Terminal:** La curva de aprendizaje es más pronunciada, reduciendo drásticamente el desperdicio de tokens por reincidencia de errores conocidos.
 
-**El Algoritmo del Trigger:**
-1.  **Observación:** Ante un error (ej. CSS layout shift), el agente aplica una solución estándar.
-2.  **Validación:** Si el usuario rechaza la solución o el subagent de verificación detecta el mismo síntoma, se registra un `iteration_count++`.
-3.  **Activación de Resiliencia y Retrospectiva:** Al finalizar el proyecto, o ante un `iteration_count == 3` crítico, el sistema activa la lectura de logs de ejecución. Identifica los patrones de fallo corregidos y realiza una **consulta profunda** a la Memoria PHVA Vectorizada.
-4.  **Resolución y Meta-Aprendizaje:** Si el problema es nuevo y se resolvió tras el análisis de logs, se ejecuta una tarea asíncrona de "Actuar" para documentar el caso, asegurando que en el futuro, el error sea mitigado en el **Intento 1**.
+## 5. Análisis de Eficiencia (v2.0 Update)
 
-## 4. Importancia y Beneficios de la Estandarización
-
-Cargar esta skill en entornos colaborativos como GitHub aporta beneficios tangibles tanto para el desarrollador individual como para la comunidad de ingeniería agéntica:
-
-*   **Estandarización del Conocimiento:** Crea un lenguaje común para documentar fallos de IA, permitiendo que diferentes agentes compartan una "base de datos de sabiduría" compatible.
-*   **Reducción de la Frustración del Usuario:** Minimiza los ciclos de "ida y vuelta" donde el usuario corrige al agente sobre lo mismo repetidamente.
-*   **Auditabilidad:** Permite a los arquitectos de sistemas revisar *qué* está aprendiendo el agente y corregir posibles sesgos en las lecciones aprendidas.
-*   **Portabilidad de la Inteligencia:** Las lecciones aprendidas en un proyecto de React pueden inyectarse preventivamente en un proyecto de Next.js si el embedding semántico detecta similitud en la arquitectura de componentes.
-
-## 5. Análisis de Eficiencia: Ahorro de Recursos en el Largo Plazo
-
-La siguiente visualización técnica compara la progresión del gasto de tokens entre un sistema reactivo tradicional y un sistema evolutivo basado en PHVA Vectorizado.
-
-```mermaid
-xychart-beta
-    title "Análisis de Optimización: Tokens vs. Curva de Aprendizaje"
-    x-axis ["Proyecto 1", "Proyecto 2", "Proyecto 3", "Proyecto 4", "Proyecto 5", "Proyecto 6"]
-    y-axis "Gasto de Tokens (Indexado)" 0 --> 100
-    line [90, 88, 92, 85, 95, 89]
-    line [95, 65, 45, 30, 22, 18]
-```
-
-> **Interpretación Especialista:** El ligero incremento inicial en el Proyecto 1 refleja el costo de la vectorización y el "overthinking" controlado para documentar el error. A partir del Proyecto 2, la pendiente de ahorro se vuelve agresiva, convergiendo hacia un estado de "Eficiencia Terminal" donde el agente opera con un conocimiento pre-cargado de casi todas las trampas técnicas comunes.
-
-
-## 5. Conclusión: El Código como Ente Evolutivo
-
-La **Memoria PHVA Vectorizada** marca el fin de la IA como una herramienta estática y el inicio de la IA como un colaborador dinámico que acumula "sabiduría técnica". Al cargar esta skill en comunidades como GitHub, permitimos que la infraestructura no solo sea ejecutable, sino que sea capaz de mejorar con cada error cometido.
-
-La calidad suprema no reside en no cometer errores, sino en garantizar que cada error solo se cometa una vez en la historia de la infraestructura.
+> **Interpretación Especialista:** Con la integración de CRAG y Self-Evolution, el Proyecto 1 (Curva de Aprendizaje) ahora genera no solo datos, sino **cambios estructurales**. Esto desplaza el punto de equilibrio hacia una eficiencia operativa total mucho más rápido que los métodos de RAG pasivo.
 
 ---
 
